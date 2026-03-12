@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00e5ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7b2fff;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="grad2" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#00e5ff;stop-opacity:0.3" />
+      <stop offset="100%" style="stop-color:#7b2fff;stop-opacity:0.3" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="6" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="glow-strong">
+      <feGaussianBlur stdDeviation="12" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <clipPath id="hexClip">
+      <polygon points="256,20 470,138 470,374 256,492 42,374 42,138"/>
+    </clipPath>
+  </defs>
+
+  <!-- Background dark -->
+  <polygon points="256,20 470,138 470,374 256,492 42,374 42,138" fill="#050508"/>
+
+  <!-- Subtle inner glow background -->
+  <polygon points="256,20 470,138 470,374 256,492 42,374 42,138" fill="url(#grad2)"/>
+
+  <!-- Hexagon border gradient -->
+  <polygon points="256,20 470,138 470,374 256,492 42,374 42,138"
+    fill="none" stroke="url(#grad1)" stroke-width="6" filter="url(#glow)"/>
+
+  <!-- Inner hexagon thin -->
+  <polygon points="256,55 440,160 440,352 256,457 72,352 72,160"
+    fill="none" stroke="url(#grad1)" stroke-width="1.5" opacity="0.25"/>
+
+  <!-- Circuit line top-left -->
+  <line x1="100" y1="175" x2="160" y2="175" stroke="#00e5ff" stroke-width="1.5" opacity="0.4"/>
+  <circle cx="160" cy="175" r="3" fill="#00e5ff" opacity="0.6"/>
+  <line x1="160" y1="175" x2="160" y2="210" stroke="#00e5ff" stroke-width="1.5" opacity="0.4"/>
+
+  <!-- Circuit line bottom-right -->
+  <line x1="412" y1="337" x2="352" y2="337" stroke="#7b2fff" stroke-width="1.5" opacity="0.4"/>
+  <circle cx="352" cy="337" r="3" fill="#7b2fff" opacity="0.6"/>
+  <line x1="352" y1="337" x2="352" y2="302" stroke="#7b2fff" stroke-width="1.5" opacity="0.4"/>
+
+  <!-- Circuit line bottom-left -->
+  <line x1="100" y1="337" x2="155" y2="337" stroke="#00e5ff" stroke-width="1.5" opacity="0.3"/>
+  <circle cx="155" cy="337" r="2.5" fill="#00e5ff" opacity="0.5"/>
+
+  <!-- Circuit line top-right -->
+  <line x1="412" y1="175" x2="357" y2="175" stroke="#7b2fff" stroke-width="1.5" opacity="0.3"/>
+  <circle cx="357" cy="175" r="2.5" fill="#7b2fff" opacity="0.5"/>
+
+  <!-- Corner accent dots -->
+  <circle cx="256" cy="30" r="4" fill="#00e5ff" opacity="0.7" filter="url(#glow)"/>
+  <circle cx="256" cy="482" r="4" fill="#7b2fff" opacity="0.7" filter="url(#glow)"/>
+  <circle cx="462" cy="143" r="3" fill="#00e5ff" opacity="0.5"/>
+  <circle cx="50" cy="369" r="3" fill="#7b2fff" opacity="0.5"/>
+
+  <!-- NCM text -->
+  <text
+    x="256"
+    y="295"
+    font-family="'Arial Black', 'Impact', sans-serif"
+    font-size="148"
+    font-weight="900"
+    text-anchor="middle"
+    letter-spacing="-4"
+    fill="url(#grad1)"
+    filter="url(#glow-strong)"
+  >NCM</text>
+
+  <!-- Underline accent bar -->
+  <rect x="156" y="315" width="200" height="3" rx="2" fill="url(#grad1)" opacity="0.8" filter="url(#glow)"/>
+
+  <!-- DIGITAL subtitle -->
+  <text
+    x="256"
+    y="355"
+    font-family="'Arial', sans-serif"
+    font-size="36"
+    font-weight="400"
+    text-anchor="middle"
+    letter-spacing="10"
+    fill="#ffffff"
+    opacity="0.55"
+  >DIGITAL</text>
+
+  <!-- Small decorative dots grid top-right area -->
+  <circle cx="390" cy="210" r="2" fill="#00e5ff" opacity="0.3"/>
+  <circle cx="405" cy="210" r="2" fill="#00e5ff" opacity="0.2"/>
+  <circle cx="390" cy="225" r="2" fill="#00e5ff" opacity="0.2"/>
+  <circle cx="405" cy="225" r="2" fill="#7b2fff" opacity="0.3"/>
+
+  <!-- Small decorative dots grid bottom-left area -->
+  <circle cx="122" cy="287" r="2" fill="#7b2fff" opacity="0.3"/>
+  <circle cx="107" cy="287" r="2" fill="#7b2fff" opacity="0.2"/>
+  <circle cx="122" cy="302" r="2" fill="#7b2fff" opacity="0.2"/>
+  <circle cx="107" cy="302" r="2" fill="#00e5ff" opacity="0.3"/>
+
+  <!-- Scan line subtle -->
+  <line x1="72" y1="256" x2="440" y2="256" stroke="url(#grad1)" stroke-width="0.5" opacity="0.15"/>
+</svg>
