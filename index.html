@@ -211,11 +211,22 @@
       box-shadow: 0 4px 0 var(--brand-blue-dark);
       margin-bottom: 4px;
       transition: transform 0.1s, box-shadow 0.1s;
+      white-space: nowrap;
     }
 
     .nav-cta:hover {
       transform: translateY(2px);
       box-shadow: 0 2px 0 var(--brand-blue-dark);
+    }
+
+    .cta-text-short {
+      display: none;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
 
     /* HERO */
@@ -1268,11 +1279,36 @@
       }
 
       .nav-pill {
-        padding: 10px 16px;
+        padding: 6px 12px;
+      }
+
+      .nav-logo {
+        gap: 8px;
+      }
+
+      .nav-logo-title {
+        font-size: 1.05rem;
       }
 
       .nav-logo-sub {
         display: none;
+      }
+
+      .nav-actions {
+        gap: 6px;
+      }
+
+      .nav-pill .nav-cta {
+        padding: 6px 14px;
+        font-size: 0.85rem;
+      }
+
+      .nav-pill .cta-text-full {
+        display: none;
+      }
+
+      .nav-pill .cta-text-short {
+        display: inline;
       }
 
       .theme-toggle {
@@ -1606,9 +1642,9 @@
         <li><a href="#proceso">Proceso</a></li>
         <li><a href="#nosotros">Nosotros</a></li>
       </ul>
-      <div style="display:flex; align-items:center; gap: 8px;">
+      <div class="nav-actions">
         <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">🌙</button>
-        <a href="#contacto" class="nav-cta">Solicitar Demo</a>
+        <a href="#contacto" class="nav-cta"><span class="cta-text-full">Solicitar Demo</span><span class="cta-text-short">Demo</span></a>
         <button class="hamburger" id="hamburgerBtn" aria-label="Menú">
           <span></span><span></span><span></span>
         </button>
