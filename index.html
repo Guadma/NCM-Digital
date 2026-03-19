@@ -115,9 +115,9 @@
     }
 
     [data-theme='dim'] {
-      --bg-main: #1e293b;
-      --bg-surface: #334155;
-      --nav-bg: rgba(30, 41, 59, 0.9);
+      --bg-main: #334155;
+      --bg-surface: #475569;
+      --nav-bg: rgba(51, 65, 85, 0.9);
       --grid-color: rgba(56, 189, 248, 0.1);
 
       --brand-blue: #38bdf8;
@@ -2110,7 +2110,7 @@
     let currentTheme = storedTheme || 'dark';
 
     const themeSequence = ['light', 'dim', 'dark'];
-    const themeIcons = { 'light': '🌤️', 'dim': '🌙', 'dark': '☀️' };
+    const themeIcons = { 'light': '☀️', 'dim': '🌗', 'dark': '🌙' };
 
     if (!themeSequence.includes(currentTheme)) currentTheme = 'dark';
 
