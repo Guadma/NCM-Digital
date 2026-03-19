@@ -114,6 +114,31 @@
       --shadow-soft: 0 10px 40px rgba(0, 0, 0, 0.3);
     }
 
+    [data-theme='dim'] {
+      --bg-main: #1e293b;
+      --bg-surface: #334155;
+      --nav-bg: rgba(30, 41, 59, 0.9);
+      --grid-color: rgba(56, 189, 248, 0.1);
+
+      --brand-blue: #38bdf8;
+      --brand-blue-lite: rgba(56, 189, 248, 0.15);
+      --brand-blue-dark: #0284c7;
+
+      --brand-yellow: #fcd34d;
+      --brand-yellow-lite: rgba(252, 211, 77, 0.15);
+      --brand-yellow-dark: #b45309;
+
+      --brand-orange: #fb923c;
+      --brand-orange-lite: rgba(251, 146, 60, 0.15);
+      --brand-orange-dark: #c2410c;
+
+      --text-main: #f1f5f9;
+      --text-muted: #cbd5e1;
+
+      --border: #475569;
+      --shadow-soft: 0 10px 40px rgba(0, 0, 0, 0.3);
+    }
+
     *,
     *::before,
     *::after {
@@ -2082,18 +2107,25 @@
     const storedTheme = localStorage.getItem('ncm_theme');
 
     // Predeterminamos oscuro si no hay nada guardado
-    const currentTheme = storedTheme || 'dark';
+    let currentTheme = storedTheme || 'dark';
+
+    const themeSequence = ['light', 'dim', 'dark'];
+    const themeIcons = { 'light': '🌤️', 'dim': '🌙', 'dark': '☀️' };
+
+    if (!themeSequence.includes(currentTheme)) currentTheme = 'dark';
 
     document.documentElement.setAttribute('data-theme', currentTheme);
-    if (themeToggle) themeToggle.textContent = currentTheme === 'dark' ? '☀️' : '🌙';
+    if (themeToggle) themeToggle.textContent = themeIcons[currentTheme];
 
     if (themeToggle) {
       themeToggle.addEventListener('click', () => {
-        let currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
-        let targetTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        let activeTheme = document.documentElement.getAttribute('data-theme') || 'light';
+        let currentIndex = themeSequence.indexOf(activeTheme);
+        let targetTheme = themeSequence[(currentIndex + 1) % themeSequence.length];
+        
         document.documentElement.setAttribute('data-theme', targetTheme);
         localStorage.setItem('ncm_theme', targetTheme);
-        themeToggle.textContent = targetTheme === 'dark' ? '☀️' : '🌙';
+        themeToggle.textContent = themeIcons[targetTheme];
       });
     }
 
