@@ -873,8 +873,8 @@
       position: fixed;
       bottom: 110px;
       right: 28px;
-      width: 380px;
-      height: 560px;
+      width: 440px;
+      height: 640px;
       background: var(--bg-surface);
       border: 2px solid var(--border);
       border-radius: 24px;
@@ -1085,12 +1085,12 @@
     }
 
     .qr-btn {
-      background: var(--bg-surface);
-      border: 2px solid var(--brand-blue-lite);
-      color: var(--brand-blue);
-      font-size: .85rem;
-      font-weight: 700;
-      padding: 8px 16px;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: .9rem;
+      font-weight: 600;
+      padding: 10px 18px;
       border-radius: var(--radius-pill);
       cursor: pointer;
       font-family: inherit;
@@ -1098,11 +1098,11 @@
     }
 
     .qr-btn:hover {
-      border-color: var(--brand-blue);
-      color: var(--bg-main);
-      background: var(--brand-blue);
+      border-color: var(--text-main);
+      color: var(--text-main);
+      background: transparent;
       transform: translateY(-2px);
-      box-shadow: 0 4px 10px rgba(78, 152, 168, 0.2);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
     }
 
     .chat-input-area {
@@ -1927,9 +1927,10 @@
     <div class="chat-messages" id="chatMessages"></div>
 
     <div class="quick-replies" id="quickReplies">
-      <button class="qr-btn" onclick="sendQuick('¿Cómo pueden ayudarme?')">¿Cómo pueden ayudarme?</button>
-      <button class="qr-btn" onclick="sendQuick('Quiero automatizar mi negocio')">Quiero automatizar mi negocio</button>
-      <button class="qr-btn" onclick="sendQuick('¡Quiero una cotización!')">¡Quiero una cotización!</button>
+      <button class="qr-btn" onclick="sendQuick('¿Qué servicios ofrecen?')">¿Qué servicios ofrecen?</button>
+      <button class="qr-btn" onclick="sendQuick('¿Cuánto cuesta?')">¿Cuánto cuesta?</button>
+      <button class="qr-btn" onclick="sendQuick('Agentes de IA')">Agentes de IA</button>
+      <button class="qr-btn" onclick="sendQuick('Quiero cotización')">Quiero cotización</button>
     </div>
 
     <div class="chat-input-area">
