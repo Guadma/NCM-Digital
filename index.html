@@ -873,8 +873,9 @@
       position: fixed;
       bottom: 110px;
       right: 28px;
-      width: 380px;
-      height: 560px;
+      width: 394px;
+      height: 520px;
+      max-height: calc(100vh - 130px);
       background: var(--bg-surface);
       border: 2px solid var(--border);
       border-radius: 24px;
@@ -897,7 +898,7 @@
     }
 
     .chat-header {
-      padding: 20px 24px;
+      padding: 12px 18px;
       background: var(--brand-blue);
       display: flex;
       align-items: center;
@@ -1085,12 +1086,12 @@
     }
 
     .qr-btn {
-      background: var(--bg-surface);
-      border: 2px solid var(--brand-blue-lite);
-      color: var(--brand-blue);
-      font-size: .85rem;
-      font-weight: 700;
-      padding: 8px 16px;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: .9rem;
+      font-weight: 600;
+      padding: 10px 18px;
       border-radius: var(--radius-pill);
       cursor: pointer;
       font-family: inherit;
@@ -1098,11 +1099,11 @@
     }
 
     .qr-btn:hover {
-      border-color: var(--brand-blue);
-      color: var(--bg-main);
-      background: var(--brand-blue);
+      border-color: var(--text-main);
+      color: var(--text-main);
+      background: transparent;
       transform: translateY(-2px);
-      box-shadow: 0 4px 10px rgba(78, 152, 168, 0.2);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
     }
 
     .chat-input-area {
@@ -1736,6 +1737,12 @@
     </div>
   </section>
 
+  <section id="antigravity-section" style="position: relative; height: 400vh; background-color: #000;">
+    <div style="position: sticky; top: 0; height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+        <canvas id="hero-canvas" width="1920" height="1080" style="max-width: 100%; max-height: 100vh; object-fit: contain;"></canvas>
+    </div>
+  </section>
+
   <!-- SCROLLING TAGS -->
   <div class="scrolling-tags">
     <div class="scrolling-track">
@@ -1927,9 +1934,10 @@
     <div class="chat-messages" id="chatMessages"></div>
 
     <div class="quick-replies" id="quickReplies">
-      <button class="qr-btn" onclick="sendQuick('¿Cómo pueden ayudarme?')">¿Cómo pueden ayudarme?</button>
-      <button class="qr-btn" onclick="sendQuick('Quiero automatizar mi negocio')">Quiero automatizar mi negocio</button>
-      <button class="qr-btn" onclick="sendQuick('¡Quiero una cotización!')">¡Quiero una cotización!</button>
+      <button class="qr-btn" onclick="sendQuick('¿Qué servicios ofrecen?')">¿Qué servicios ofrecen?</button>
+      <button class="qr-btn" onclick="sendQuick('¿Cuánto cuesta?')">¿Cuánto cuesta?</button>
+      <button class="qr-btn" onclick="sendQuick('Agentes de IA')">Agentes de IA</button>
+      <button class="qr-btn" onclick="sendQuick('Quiero cotización')">Quiero cotización</button>
     </div>
 
     <div class="chat-input-area">
@@ -2158,6 +2166,62 @@
       el.style.transition = 'opacity .7s cubic-bezier(0.175, 0.885, 0.32, 1.275), transform .7s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
       observer.observe(el);
     });
+    
+    document.addEventListener("DOMContentLoaded", () => {
+    const canvas = document.getElementById("hero-canvas");
+    const context = canvas.getContext("2d");
+    const section = document.getElementById("antigravity-section");
+    
+    const frameCount = 100; // La cantidad de fotogramas que exportaste
+    const images = [];
+    let imagesLoaded = 0;
+
+    // Precarga inteligente en la caché del navegador
+    for (let i = 1; i <= frameCount; i++) {
+        const img = new Image();
+        // Genera los nombres con ceros a la izquierda: frame_0001.webp
+        const frameIndex = i.toString().padStart(4, '0');
+        // Asegurate de que la carpeta frames_webp esté dentro de tu repositorio
+        img.src = `frames_webp/frame_${frameIndex}.webp`; 
+        
+        img.onload = () => {
+            imagesLoaded++;
+            // Apenas cargue el primer fotograma, lo dibuja para que no quede la pantalla negra
+            if (imagesLoaded === 1) {
+                context.drawImage(img, 0, 0, canvas.width, canvas.height);
+            }
+        };
+        images.push(img);
+    }
+
+    // Intercepta el evento de desplazamiento del mouse
+    window.addEventListener("scroll", () => {
+        // Calcula dónde está el usuario relativo al contenedor de 400vh
+        const scrollTop = window.scrollY - section.offsetTop;
+        const maxScroll = section.scrollHeight - window.innerHeight;
+        
+        // Si el usuario está scrolleando dentro de la sección de la animación
+        if (scrollTop > 0 && scrollTop < maxScroll) {
+            
+            // Transforma la posición de píxeles a un porcentaje (0.0 a 1.0)
+            const scrollFraction = scrollTop / maxScroll;
+            
+            // Mapea ese porcentaje al índice del arreglo de imágenes (0 a 99)
+            const frameIndex = Math.min(
+                frameCount - 1,
+                Math.floor(scrollFraction * frameCount)
+            );
+            
+            // Inyecta el fotograma exacto en el lienzo a 60 FPS
+            if (images[frameIndex] && images[frameIndex].complete) {
+                requestAnimationFrame(() => {
+                    context.clearRect(0, 0, canvas.width, canvas.height);
+                    context.drawImage(images[frameIndex], 0, 0, canvas.width, canvas.height);
+                });
+            }
+        }
+    });
+});
   </script>
 
 </body>
