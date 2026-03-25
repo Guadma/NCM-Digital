@@ -1737,12 +1737,6 @@
     </div>
   </section>
 
-  <section id="antigravity-section" style="position: relative; height: 400vh; background-color: #000;">
-    <div style="position: sticky; top: 0; height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden;">
-        <canvas id="hero-canvas" width="1920" height="1080" style="max-width: 100%; max-height: 100vh; object-fit: contain;"></canvas>
-    </div>
-  </section>
-
   <!-- SCROLLING TAGS -->
   <div class="scrolling-tags">
     <div class="scrolling-track">
@@ -2167,61 +2161,6 @@
       observer.observe(el);
     });
     
-    document.addEventListener("DOMContentLoaded", () => {
-    const canvas = document.getElementById("hero-canvas");
-    const context = canvas.getContext("2d");
-    const section = document.getElementById("antigravity-section");
-    
-    const frameCount = 100; // La cantidad de fotogramas que exportaste
-    const images = [];
-    let imagesLoaded = 0;
-
-    // Precarga inteligente en la caché del navegador
-    for (let i = 1; i <= frameCount; i++) {
-        const img = new Image();
-        // Genera los nombres con ceros a la izquierda: frame_0001.webp
-        const frameIndex = i.toString().padStart(4, '0');
-        // Asegurate de que la carpeta frames_webp esté dentro de tu repositorio
-        img.src = `frames_webp/frame_${frameIndex}.webp`; 
-        
-        img.onload = () => {
-            imagesLoaded++;
-            // Apenas cargue el primer fotograma, lo dibuja para que no quede la pantalla negra
-            if (imagesLoaded === 1) {
-                context.drawImage(img, 0, 0, canvas.width, canvas.height);
-            }
-        };
-        images.push(img);
-    }
-
-    // Intercepta el evento de desplazamiento del mouse
-    window.addEventListener("scroll", () => {
-        // Calcula dónde está el usuario relativo al contenedor de 400vh
-        const scrollTop = window.scrollY - section.offsetTop;
-        const maxScroll = section.scrollHeight - window.innerHeight;
-        
-        // Si el usuario está scrolleando dentro de la sección de la animación
-        if (scrollTop > 0 && scrollTop < maxScroll) {
-            
-            // Transforma la posición de píxeles a un porcentaje (0.0 a 1.0)
-            const scrollFraction = scrollTop / maxScroll;
-            
-            // Mapea ese porcentaje al índice del arreglo de imágenes (0 a 99)
-            const frameIndex = Math.min(
-                frameCount - 1,
-                Math.floor(scrollFraction * frameCount)
-            );
-            
-            // Inyecta el fotograma exacto en el lienzo a 60 FPS
-            if (images[frameIndex] && images[frameIndex].complete) {
-                requestAnimationFrame(() => {
-                    context.clearRect(0, 0, canvas.width, canvas.height);
-                    context.drawImage(images[frameIndex], 0, 0, canvas.width, canvas.height);
-                });
-            }
-        }
-    });
-});
   </script>
 
 </body>
