@@ -142,11 +142,50 @@ function scrollBottom() {
   msgs.scrollTop = msgs.scrollHeight;
 }
 
-function handleContact() {
-  const email = document.getElementById('email-input').value;
-  if (email && email.includes('@')) {
+async function handleContact() {
+  const emailInput = document.getElementById('email-input');
+  const btn = document.querySelector('.contact-btn');
+  const msg = document.getElementById('contact-msg');
+  const email = emailInput.value.trim();
+
+  if (!email || !email.includes('@')) return;
+
+  // Visual feedback — loading state
+  btn.disabled = true;
+  btn.textContent = 'Enviando...';
+  msg.style.display = 'none';
+
+  const payload = {
+    isContactForm: true,
+    userEmail: email,
+    sessionId: sessionId,
+    pageUrl: window.location.href,
+    timestamp: new Date().toISOString()
+  };
+
+  try {
+    const res = await fetch(N8N_WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+    // Success
     localStorage.setItem('ncm_email', email);
-    document.getElementById('contact-msg').style.display = 'block';
-    document.getElementById('email-input').value = '';
+    emailInput.value = '';
+    msg.style.display = 'block';
+    msg.style.color = 'var(--brand-blue)';
+    msg.textContent = '¡Listo! Te enviaremos un ping pronto 🚀';
+
+  } catch (err) {
+    msg.style.display = 'block';
+    msg.style.color = '#e11d48';
+    msg.textContent = '⚠️ Hubo un problema. Intenta de nuevo en un momento.';
+    console.error('Contact form error:', err);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Subir a la Nube →';
   }
 }
