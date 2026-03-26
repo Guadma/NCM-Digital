@@ -156,6 +156,7 @@ async function handleContact() {
   msg.style.display = 'none';
 
   const payload = {
+    source: 'contact_form',
     isContactForm: true,
     userEmail: email,
     sessionId: sessionId,
