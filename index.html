@@ -2186,15 +2186,20 @@
     <p class="section-sub" style="margin: 0 auto 3rem;">Completá el formulario y te respondemos a la brevedad. Sin compromiso.</p>
 
     <div class="contact-container">
-      <form id="contact-form" onsubmit="handleContactForm(event)" novalidate>
+      <form id="contact-form" action="https://formsubmit.co/ncm.digital08@gmail.com" method="POST">
+        <!-- Input oculto para que Formsubmit no pida captcha si es posible, o redirija a otra pag -->
+        <input type="hidden" name="_subject" value="Nuevo prospecto desde NCM Digital">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_captcha" value="false">
+
         <div class="form-field">
-          <input type="text" id="contact-nombre" class="contact-input" placeholder="Nombre completo" required autocomplete="name">
+          <input type="text" id="contact-nombre" name="nombre" class="contact-input" placeholder="Nombre completo" required autocomplete="name">
         </div>
         <div class="form-field">
-          <input type="email" id="contact-email" class="contact-input" placeholder="tu@email.com" required autocomplete="email">
+          <input type="email" id="contact-email" name="email" class="contact-input" placeholder="tu@email.com" required autocomplete="email">
         </div>
         <div class="form-field">
-          <select id="contact-servicio" class="contact-input contact-select" required>
+          <select id="contact-servicio" name="servicio" class="contact-input contact-select" required>
             <option value="">Tipo de servicio...</option>
             <option value="web">Página web profesional</option>
             <option value="chatbot">Agente de IA / Chatbot</option>
@@ -2204,11 +2209,9 @@
           </select>
         </div>
         <div class="form-field">
-          <textarea id="contact-mensaje" class="contact-input contact-textarea" placeholder="Contáme un poco sobre tu proyecto o negocio..." rows="4"></textarea>
+          <textarea id="contact-mensaje" name="mensaje" class="contact-input contact-textarea" placeholder="Contáme un poco sobre tu proyecto o negocio..." rows="4" required></textarea>
         </div>
         <button type="submit" class="contact-btn">Enviar consulta →</button>
-        <div id="contact-success" class="contact-success" style="display:none;">✅ ¡Consulta recibida! Te responderemos a la brevedad.</div>
-        <div id="contact-error" class="contact-error" style="display:none;">❌ Hubo un error al enviar. Escribínos directamente a ncm.digital08@gmail.com</div>
       </form>
     </div>
   </section>
@@ -2468,61 +2471,7 @@
       if (select) select.value = service;
     }
 
-    async function handleContactForm(e) {
-      e.preventDefault();
-      
-      const form = e.target;
-      const btn = form.querySelector('.contact-btn');
-      const succ = document.getElementById('contact-success');
-      const err = document.getElementById('contact-error');
-      
-      const nombre = document.getElementById('contact-nombre').value;
-      const email = document.getElementById('contact-email').value;
-      const servicio = document.getElementById('contact-servicio').value;
-      const mensaje = document.getElementById('contact-mensaje').value;
-      
-      if(!nombre || !email || !servicio) return;
-      
-      btn.disabled = true;
-      btn.textContent = 'Enviando...';
-      succ.style.display = 'none';
-      err.style.display = 'none';
 
-      const payload = {
-        formSubmit: true,
-        nombre: nombre,
-        email: email,
-        servicio: servicio,
-        mensaje: mensaje,
-        pageUrl: window.location.href,
-        timestamp: new Date().toISOString()
-      };
-
-      try {
-        const res = await fetch(N8N_WEBHOOK_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-
-        // Fire GA4 conversion event
-        if(typeof gtag !== 'undefined') {
-          gtag('event', 'lead_form_submit', { 'event_category': 'conversion' });
-        }
-
-        succ.style.display = 'block';
-        form.reset();
-        
-      } catch (error) {
-        console.error('Contact form error:', error);
-        err.style.display = 'block';
-      } finally {
-        btn.disabled = false;
-        btn.textContent = 'Enviar consulta →';
-      }
-    }
 
     // Hamburger Menu Logic
     const hamburgerBtn = document.getElementById('hamburgerBtn');
